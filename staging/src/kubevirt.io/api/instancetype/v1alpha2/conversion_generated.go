@@ -675,6 +675,7 @@ func autoConvert_v1beta1_VirtualMachineInstancetypeSpec_To_v1alpha2_VirtualMachi
 		return err
 	}
 	out.GPUs = *(*[]corev1.GPU)(unsafe.Pointer(&in.GPUs))
+	// WARNING: in.Panics requires manual conversion: does not exist in peer-type
 	out.HostDevices = *(*[]corev1.HostDevice)(unsafe.Pointer(&in.HostDevices))
 	out.IOThreadsPolicy = (*corev1.IOThreadsPolicy)(unsafe.Pointer(in.IOThreadsPolicy))
 	out.LaunchSecurity = (*corev1.LaunchSecurity)(unsafe.Pointer(in.LaunchSecurity))

@@ -497,6 +497,10 @@ type Devices struct {
 	// DownwardMetrics creates a virtio serials for exposing the downward metrics to the vmi.
 	// +optional
 	DownwardMetrics *DownwardMetrics `json:"downwardMetrics,omitempty"`
+	// Panics provides additional crash information when domain crashes.
+	// +optional
+	// +listtype=atomic
+	Panics []Panic `json:"panics,omitempty"`
 	// Filesystems describes filesystem which is connected to the vmi.
 	// +optional
 	// +listType=atomic
@@ -607,6 +611,10 @@ type VGPUDisplayOptions struct {
 	// Defaults to true.
 	// +optional
 	RamFB *FeatureState `json:"ramFB,omitempty"`
+}
+
+type Panic struct {
+	Model string `json:"model,omitempty"`
 }
 
 type HostDevice struct {

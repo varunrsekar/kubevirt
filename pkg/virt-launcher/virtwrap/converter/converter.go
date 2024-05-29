@@ -988,6 +988,19 @@ func Convert_v1_Usbredir_To_api_Usbredir(vmi *v1.VirtualMachineInstance, domainD
 	return nil
 }
 
+func convertPanics(panics []v1.Panic) []api.PanicDevice {
+	domainPanics := []api.PanicDevice{}
+
+	for _, panic := range panics {
+		panicDev := api.PanicDevice{
+			Model: panic.Model,
+		}
+		domainPanics = append(domainPanics, panicDev)
+	}
+
+	return domainPanics
+}
+
 func Convert_v1_Sound_To_api_Sound(vmi *v1.VirtualMachineInstance, domainDevices *api.Devices, _ *ConverterContext) {
 	sound := vmi.Spec.Domain.Devices.Sound
 
@@ -1726,6 +1739,8 @@ func Convert_v1_VirtualMachineInstance_To_api_Domain(vmi *v1.VirtualMachineInsta
 	}
 	// Handle virtioFS
 	domain.Spec.Devices.Filesystems = append(domain.Spec.Devices.Filesystems, convertFileSystems(vmi.Spec.Domain.Devices.Filesystems)...)
+
+	domain.Spec.Devices.Panics = append(domain.Spec.Devices.Panics, convertPanics(vmi.Spec.Domain.Devices.Panics)...)
 
 	Convert_v1_Sound_To_api_Sound(vmi, &domain.Spec.Devices, c)
 

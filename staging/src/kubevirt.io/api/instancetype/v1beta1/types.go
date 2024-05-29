@@ -101,6 +101,12 @@ type VirtualMachineInstancetypeSpec struct {
 	// +listType=atomic
 	GPUs []v1.GPU `json:"gpus,omitempty"`
 
+	// Optionally defines any panic devices associated with the instancetype.
+	//
+	// +optional
+	// +listType=atomic
+	Panics []v1.Panic `json:"panics,omitempty"`
+
 	// Optionally defines any HostDevices associated with the instancetype.
 	//
 	// +optional

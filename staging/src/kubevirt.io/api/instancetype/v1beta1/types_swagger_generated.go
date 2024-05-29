@@ -36,6 +36,7 @@ func (VirtualMachineInstancetypeSpec) SwaggerDoc() map[string]string {
 		"cpu":             "Required CPU related attributes of the instancetype.",
 		"memory":          "Required Memory related attributes of the instancetype.",
 		"gpus":            "Optionally defines any GPU devices associated with the instancetype.\n\n+optional\n+listType=atomic",
+		"panics":          "Optionally defines any panic devices associated with the instancetype.\n\n+optional\n+listType=atomic",
 		"hostDevices":     "Optionally defines any HostDevices associated with the instancetype.\n\n+optional\n+listType=atomic",
 		"ioThreadsPolicy": "Optionally defines the IOThreadsPolicy to be used by the instancetype.\n\n+optional",
 		"launchSecurity":  "Optionally defines the LaunchSecurity to be used by the instancetype.\n\n+optional",

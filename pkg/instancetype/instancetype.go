@@ -465,6 +465,7 @@ func (m *InstancetypeMethods) ApplyToVmi(field *k8sfield.Path, instancetypeSpec 
 		conflicts = append(conflicts, applyLaunchSecurity(field, instancetypeSpec, vmiSpec)...)
 		conflicts = append(conflicts, applyGPUs(field, instancetypeSpec, vmiSpec)...)
 		conflicts = append(conflicts, applyHostDevices(field, instancetypeSpec, vmiSpec)...)
+		conflicts = append(conflicts, applyPanics(field, instancetypeSpec, vmiSpec)...)
 		conflicts = append(conflicts, applyInstanceTypeAnnotations(instancetypeSpec.Annotations, vmiMetadata)...)
 	}
 
@@ -1224,6 +1225,21 @@ func applyHostDevices(field *k8sfield.Path, instancetypeSpec *instancetypev1beta
 
 	vmiSpec.Domain.Devices.HostDevices = make([]virtv1.HostDevice, len(instancetypeSpec.HostDevices))
 	copy(vmiSpec.Domain.Devices.HostDevices, instancetypeSpec.HostDevices)
+
+	return nil
+}
+
+func applyPanics(field *k8sfield.Path, instancetypeSpec *instancetypev1beta1.VirtualMachineInstancetypeSpec, vmiSpec *virtv1.VirtualMachineInstanceSpec) Conflicts {
+	if len(instancetypeSpec.Panics) == 0 {
+		return nil
+	}
+
+	if len(vmiSpec.Domain.Devices.Panics) >= 1 {
+		return Conflicts{field.Child("domain", "devices", "panics")}
+	}
+
+	vmiSpec.Domain.Devices.Panics = make([]virtv1.Panic, len(instancetypeSpec.Panics))
+	copy(vmiSpec.Domain.Devices.Panics, instancetypeSpec.Panics)
 
 	return nil
 }

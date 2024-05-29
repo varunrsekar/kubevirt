@@ -5970,6 +5970,15 @@ var CRDsValidation map[string]string = map[string]string{
                             depends on additional factors of the VirtualMachineInstance,
                             like the number of guest CPUs.
                           type: boolean
+                        panics:
+                          description: Panics provides additional crash information
+                            when domain crashes.
+                          items:
+                            properties:
+                              model:
+                                type: string
+                            type: object
+                          type: array
                         rng:
                           description: Whether to have random number generator from
                             host
@@ -8305,6 +8314,15 @@ var CRDsValidation map[string]string = map[string]string{
 
             NodeSelector is the name of the custom node selector for the instancetype.
           type: object
+        panics:
+          description: Optionally defines any panic devices associated with the instancetype.
+          items:
+            properties:
+              model:
+                type: string
+            type: object
+          type: array
+          x-kubernetes-list-type: atomic
         schedulerName:
           description: |-
             If specified, the VMI will be dispatched by specified scheduler.
@@ -10838,6 +10856,15 @@ var CRDsValidation map[string]string = map[string]string{
                     factors of the VirtualMachineInstance, like the number of guest
                     CPUs.
                   type: boolean
+                panics:
+                  description: Panics provides additional crash information when domain
+                    crashes.
+                  items:
+                    properties:
+                      model:
+                        type: string
+                    type: object
+                  type: array
                 rng:
                   description: Whether to have random number generator from host
                   type: object
@@ -13852,6 +13879,15 @@ var CRDsValidation map[string]string = map[string]string{
                     factors of the VirtualMachineInstance, like the number of guest
                     CPUs.
                   type: boolean
+                panics:
+                  description: Panics provides additional crash information when domain
+                    crashes.
+                  items:
+                    properties:
+                      model:
+                        type: string
+                    type: object
+                  type: array
                 rng:
                   description: Whether to have random number generator from host
                   type: object
@@ -16092,6 +16128,15 @@ var CRDsValidation map[string]string = map[string]string{
                             depends on additional factors of the VirtualMachineInstance,
                             like the number of guest CPUs.
                           type: boolean
+                        panics:
+                          description: Panics provides additional crash information
+                            when domain crashes.
+                          items:
+                            properties:
+                              model:
+                                type: string
+                            type: object
+                          type: array
                         rng:
                           description: Whether to have random number generator from
                             host
@@ -17896,6 +17941,15 @@ var CRDsValidation map[string]string = map[string]string{
 
             NodeSelector is the name of the custom node selector for the instancetype.
           type: object
+        panics:
+          description: Optionally defines any panic devices associated with the instancetype.
+          items:
+            properties:
+              model:
+                type: string
+            type: object
+          type: array
+          x-kubernetes-list-type: atomic
         schedulerName:
           description: |-
             If specified, the VMI will be dispatched by specified scheduler.
@@ -20409,6 +20463,15 @@ var CRDsValidation map[string]string = map[string]string{
                                     factors of the VirtualMachineInstance, like the
                                     number of guest CPUs.
                                   type: boolean
+                                panics:
+                                  description: Panics provides additional crash information
+                                    when domain crashes.
+                                  items:
+                                    properties:
+                                      model:
+                                        type: string
+                                    type: object
+                                  type: array
                                 rng:
                                   description: Whether to have random number generator
                                     from host
@@ -25413,6 +25476,15 @@ var CRDsValidation map[string]string = map[string]string{
                                         factors of the VirtualMachineInstance, like
                                         the number of guest CPUs.
                                       type: boolean
+                                    panics:
+                                      description: Panics provides additional crash
+                                        information when domain crashes.
+                                      items:
+                                        properties:
+                                          model:
+                                            type: string
+                                        type: object
+                                      type: array
                                     rng:
                                       description: Whether to have random number generator
                                         from host

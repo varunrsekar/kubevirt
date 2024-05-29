@@ -159,6 +159,10 @@ func SetObjectDefaults_VirtualMachine(in *VirtualMachine) {
 				}
 			}
 		}
+		for i := range in.Spec.Template.Spec.Domain.Devices.Panics {
+			a := &in.Spec.Template.Spec.Domain.Devices.Panics[i]
+			SetDefaults_Panic(a)
+		}
 		if in.Spec.Template.Spec.LivenessProbe != nil {
 			SetDefaults_Probe(in.Spec.Template.Spec.LivenessProbe)
 		}
@@ -295,6 +299,10 @@ func SetObjectDefaults_VirtualMachineInstance(in *VirtualMachineInstance) {
 			}
 		}
 	}
+	for i := range in.Spec.Domain.Devices.Panics {
+		a := &in.Spec.Domain.Devices.Panics[i]
+		SetDefaults_Panic(a)
+	}
 	if in.Spec.LivenessProbe != nil {
 		SetDefaults_Probe(in.Spec.LivenessProbe)
 	}
@@ -421,6 +429,10 @@ func SetObjectDefaults_VirtualMachineInstancePreset(in *VirtualMachineInstancePr
 				}
 			}
 		}
+		for i := range in.Spec.Domain.Devices.Panics {
+			a := &in.Spec.Domain.Devices.Panics[i]
+			SetDefaults_Panic(a)
+		}
 	}
 }
 
@@ -541,6 +553,10 @@ func SetObjectDefaults_VirtualMachineInstanceReplicaSet(in *VirtualMachineInstan
 					}
 				}
 			}
+		}
+		for i := range in.Spec.Template.Spec.Domain.Devices.Panics {
+			a := &in.Spec.Template.Spec.Domain.Devices.Panics[i]
+			SetDefaults_Panic(a)
 		}
 		if in.Spec.Template.Spec.LivenessProbe != nil {
 			SetDefaults_Probe(in.Spec.Template.Spec.LivenessProbe)

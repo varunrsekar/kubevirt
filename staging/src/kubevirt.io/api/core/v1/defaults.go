@@ -74,6 +74,12 @@ func SetDefaults_DiskDevice(obj *DiskDevice) {
 	}
 }
 
+func SetDefaults_Panic(obj *Panic) {
+	if obj.Model == "" {
+		obj.Model = "hyperv"
+	}
+}
+
 func SetDefaults_Watchdog(obj *Watchdog) {
 	if obj.I6300ESB == nil {
 		obj.I6300ESB = &I6300ESBWatchdog{}

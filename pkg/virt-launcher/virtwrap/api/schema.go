@@ -509,6 +509,7 @@ type Devices struct {
 	Interfaces  []Interface        `xml:"interface"`
 	Channels    []Channel          `xml:"channel"`
 	HostDevices []HostDevice       `xml:"hostdev,omitempty"`
+	Panics      []PanicDevice      `xml:"panic,omitempty"`
 	Controllers []Controller       `xml:"controller,omitempty"`
 	Video       []Video            `xml:"video"`
 	Graphics    []Graphics         `xml:"graphics"`
@@ -525,6 +526,10 @@ type Devices struct {
 	TPMs        []TPM              `xml:"tpm,omitempty"`
 	VSOCK       *VSOCK             `xml:"vsock,omitempty"`
 	Memory      *MemoryDevice      `xml:"memory,omitempty"`
+}
+
+type PanicDevice struct {
+	Model string `xml:"model,attr"`
 }
 
 type TPM struct {

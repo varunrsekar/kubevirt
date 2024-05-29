@@ -619,6 +619,11 @@ func (in *VirtualMachineInstancetypeSpec) DeepCopyInto(out *VirtualMachineInstan
 			(*in)[i].DeepCopyInto(&(*out)[i])
 		}
 	}
+	if in.Panics != nil {
+		in, out := &in.Panics, &out.Panics
+		*out = make([]v1.Panic, len(*in))
+		copy(*out, *in)
+	}
 	if in.HostDevices != nil {
 		in, out := &in.HostDevices, &out.HostDevices
 		*out = make([]v1.HostDevice, len(*in))

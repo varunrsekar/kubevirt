@@ -440,6 +440,7 @@ func GetOpenAPIDefinitions(ref common.ReferenceCallback) map[string]common.OpenA
 		"kubevirt.io/api/core/v1.NodeMediatedDeviceTypesConfig":                                      schema_kubevirtio_api_core_v1_NodeMediatedDeviceTypesConfig(ref),
 		"kubevirt.io/api/core/v1.NodePlacement":                                                      schema_kubevirtio_api_core_v1_NodePlacement(ref),
 		"kubevirt.io/api/core/v1.PITTimer":                                                           schema_kubevirtio_api_core_v1_PITTimer(ref),
+		"kubevirt.io/api/core/v1.Panic":                                                              schema_kubevirtio_api_core_v1_Panic(ref),
 		"kubevirt.io/api/core/v1.PauseOptions":                                                       schema_kubevirtio_api_core_v1_PauseOptions(ref),
 		"kubevirt.io/api/core/v1.PciHostDevice":                                                      schema_kubevirtio_api_core_v1_PciHostDevice(ref),
 		"kubevirt.io/api/core/v1.PermittedHostDevices":                                               schema_kubevirtio_api_core_v1_PermittedHostDevices(ref),
@@ -17075,6 +17076,20 @@ func schema_kubevirtio_api_core_v1_Devices(ref common.ReferenceCallback) common.
 							Ref:         ref("kubevirt.io/api/core/v1.DownwardMetrics"),
 						},
 					},
+					"panics": {
+						SchemaProps: spec.SchemaProps{
+							Description: "Panics provides additional crash information when domain crashes.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("kubevirt.io/api/core/v1.Panic"),
+									},
+								},
+							},
+						},
+					},
 					"filesystems": {
 						VendorExtensible: spec.VendorExtensible{
 							Extensions: spec.Extensions{
@@ -17135,7 +17150,7 @@ func schema_kubevirtio_api_core_v1_Devices(ref common.ReferenceCallback) common.
 			},
 		},
 		Dependencies: []string{
-			"kubevirt.io/api/core/v1.ClientPassthroughDevices", "kubevirt.io/api/core/v1.Disk", "kubevirt.io/api/core/v1.DownwardMetrics", "kubevirt.io/api/core/v1.Filesystem", "kubevirt.io/api/core/v1.GPU", "kubevirt.io/api/core/v1.HostDevice", "kubevirt.io/api/core/v1.Input", "kubevirt.io/api/core/v1.Interface", "kubevirt.io/api/core/v1.Rng", "kubevirt.io/api/core/v1.SoundDevice", "kubevirt.io/api/core/v1.TPMDevice", "kubevirt.io/api/core/v1.Watchdog"},
+			"kubevirt.io/api/core/v1.ClientPassthroughDevices", "kubevirt.io/api/core/v1.Disk", "kubevirt.io/api/core/v1.DownwardMetrics", "kubevirt.io/api/core/v1.Filesystem", "kubevirt.io/api/core/v1.GPU", "kubevirt.io/api/core/v1.HostDevice", "kubevirt.io/api/core/v1.Input", "kubevirt.io/api/core/v1.Interface", "kubevirt.io/api/core/v1.Panic", "kubevirt.io/api/core/v1.Rng", "kubevirt.io/api/core/v1.SoundDevice", "kubevirt.io/api/core/v1.TPMDevice", "kubevirt.io/api/core/v1.Watchdog"},
 	}
 }
 
@@ -20685,6 +20700,24 @@ func schema_kubevirtio_api_core_v1_PITTimer(ref common.ReferenceCallback) common
 							Description: "Enabled set to false makes sure that the machine type or a preset can't add the timer. Defaults to true.",
 							Type:        []string{"boolean"},
 							Format:      "",
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func schema_kubevirtio_api_core_v1_Panic(ref common.ReferenceCallback) common.OpenAPIDefinition {
+	return common.OpenAPIDefinition{
+		Schema: spec.Schema{
+			SchemaProps: spec.SchemaProps{
+				Type: []string{"object"},
+				Properties: map[string]spec.Schema{
+					"model": {
+						SchemaProps: spec.SchemaProps{
+							Type:   []string{"string"},
+							Format: "",
 						},
 					},
 				},
@@ -28832,6 +28865,25 @@ func schema_kubevirtio_api_instancetype_v1beta1_VirtualMachineInstancetypeSpec(r
 							},
 						},
 					},
+					"panics": {
+						VendorExtensible: spec.VendorExtensible{
+							Extensions: spec.Extensions{
+								"x-kubernetes-list-type": "atomic",
+							},
+						},
+						SchemaProps: spec.SchemaProps{
+							Description: "Optionally defines any panic devices associated with the instancetype.",
+							Type:        []string{"array"},
+							Items: &spec.SchemaOrArray{
+								Schema: &spec.Schema{
+									SchemaProps: spec.SchemaProps{
+										Default: map[string]interface{}{},
+										Ref:     ref("kubevirt.io/api/core/v1.Panic"),
+									},
+								},
+							},
+						},
+					},
 					"hostDevices": {
 						VendorExtensible: spec.VendorExtensible{
 							Extensions: spec.Extensions{
@@ -28885,7 +28937,7 @@ func schema_kubevirtio_api_instancetype_v1beta1_VirtualMachineInstancetypeSpec(r
 			},
 		},
 		Dependencies: []string{
-			"kubevirt.io/api/core/v1.GPU", "kubevirt.io/api/core/v1.HostDevice", "kubevirt.io/api/core/v1.LaunchSecurity", "kubevirt.io/api/instancetype/v1beta1.CPUInstancetype", "kubevirt.io/api/instancetype/v1beta1.MemoryInstancetype"},
+			"kubevirt.io/api/core/v1.GPU", "kubevirt.io/api/core/v1.HostDevice", "kubevirt.io/api/core/v1.LaunchSecurity", "kubevirt.io/api/core/v1.Panic", "kubevirt.io/api/instancetype/v1beta1.CPUInstancetype", "kubevirt.io/api/instancetype/v1beta1.MemoryInstancetype"},
 	}
 }
 
