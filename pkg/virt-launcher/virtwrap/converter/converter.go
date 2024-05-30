@@ -1261,6 +1261,7 @@ func setupDomainMemory(vmi *v1.VirtualMachineInstance, domain *api.Domain) error
 		if err != nil {
 			return err
 		}
+		domain.Spec.Memory.DumpCore = "on"
 		return nil
 	}
 
