@@ -1742,6 +1742,8 @@ func Convert_v1_VirtualMachineInstance_To_api_Domain(vmi *v1.VirtualMachineInsta
 
 	domain.Spec.Devices.Panics = append(domain.Spec.Devices.Panics, convertPanics(vmi.Spec.Domain.Devices.Panics)...)
 
+	domain.Spec.OnCrash = vmi.Spec.Domain.OnCrash
+
 	Convert_v1_Sound_To_api_Sound(vmi, &domain.Spec.Devices, c)
 
 	if vmi.Spec.Domain.Devices.Watchdog != nil {

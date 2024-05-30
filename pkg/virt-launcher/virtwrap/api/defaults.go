@@ -58,6 +58,7 @@ func (d *Defaulter) SetDefaults_DomainSpec(spec *DomainSpec) {
 	if spec.Type == "" {
 		spec.Type = "kvm"
 	}
+	spec.OnCrash = "coredump-destroy"
 }
 
 func (d *Defaulter) SetDefaults_SysInfo(sysinfo *SysInfo) {

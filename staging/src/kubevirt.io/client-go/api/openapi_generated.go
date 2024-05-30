@@ -17480,6 +17480,13 @@ func schema_kubevirtio_api_core_v1_DomainSpec(ref common.ReferenceCallback) comm
 							Ref:         ref("kubevirt.io/api/core/v1.LaunchSecurity"),
 						},
 					},
+					"onCrash": {
+						SchemaProps: spec.SchemaProps{
+							Description: "OnCrash action for the vmi.",
+							Type:        []string{"string"},
+							Format:      "",
+						},
+					},
 				},
 				Required: []string{"devices"},
 			},

@@ -16918,6 +16918,10 @@
       "description": "Memory allow specifying the VMI memory features.",
       "$ref": "#/definitions/v1.Memory"
      },
+     "onCrash": {
+      "description": "OnCrash action for the vmi.",
+      "type": "string"
+     },
      "resources": {
       "description": "Resources describes the Compute Resources required by this vmi.",
       "default": {},

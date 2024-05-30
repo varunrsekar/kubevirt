@@ -209,6 +209,9 @@ type DomainSpec struct {
 	// Launch Security setting of the vmi.
 	// +optional
 	LaunchSecurity *LaunchSecurity `json:"launchSecurity,omitempty"`
+	// OnCrash action for the vmi.
+	// +optional
+	OnCrash string `json:"onCrash,omitempty"`
 }
 
 // Chassis specifies the chassis info passed to the domain.

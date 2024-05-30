@@ -95,6 +95,7 @@ func (DomainSpec) SwaggerDoc() map[string]string {
 		"ioThreadsPolicy": "Controls whether or not disks will share IOThreads.\nOmitting IOThreadsPolicy disables use of IOThreads.\nOne of: shared, auto\n+optional",
 		"chassis":         "Chassis specifies the chassis info passed to the domain.\n+optional",
 		"launchSecurity":  "Launch Security setting of the vmi.\n+optional",
+		"onCrash":         "OnCrash action for the vmi.\n+optional",
 	}
 }
 
