@@ -432,8 +432,9 @@ type Resource struct {
 }
 
 type Memory struct {
-	Value uint64 `xml:",chardata"`
-	Unit  string `xml:"unit,attr"`
+	Value    uint64 `xml:",chardata"`
+	Unit     string `xml:"unit,attr"`
+	DumpCore string `xml:"dumpCore,attr"`
 }
 
 type MaxMemory struct {

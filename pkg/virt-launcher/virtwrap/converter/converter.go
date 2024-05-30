@@ -1276,6 +1276,7 @@ func setupDomainMemory(vmi *v1.VirtualMachineInstance, domain *api.Domain) error
 	}
 
 	domain.Spec.Memory = maxMemory
+	domain.Spec.Memory.DumpCore = "on"
 
 	initialMemoryApi, err := vcpu.QuantityToByte(*vmi.Status.Memory.GuestAtBoot)
 	if err != nil {
