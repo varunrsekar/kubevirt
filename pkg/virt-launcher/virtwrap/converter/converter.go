@@ -1261,7 +1261,6 @@ func setupDomainMemory(vmi *v1.VirtualMachineInstance, domain *api.Domain) error
 		if err != nil {
 			return err
 		}
-		domain.Spec.Memory.DumpCore = "on"
 		return nil
 	}
 
@@ -1277,7 +1276,6 @@ func setupDomainMemory(vmi *v1.VirtualMachineInstance, domain *api.Domain) error
 	}
 
 	domain.Spec.Memory = maxMemory
-	domain.Spec.Memory.DumpCore = "on"
 
 	initialMemoryApi, err := vcpu.QuantityToByte(*vmi.Status.Memory.GuestAtBoot)
 	if err != nil {
@@ -1743,8 +1741,6 @@ func Convert_v1_VirtualMachineInstance_To_api_Domain(vmi *v1.VirtualMachineInsta
 	domain.Spec.Devices.Filesystems = append(domain.Spec.Devices.Filesystems, convertFileSystems(vmi.Spec.Domain.Devices.Filesystems)...)
 
 	domain.Spec.Devices.Panics = append(domain.Spec.Devices.Panics, convertPanics(vmi.Spec.Domain.Devices.Panics)...)
-
-	domain.Spec.OnCrash = vmi.Spec.Domain.OnCrash
 
 	Convert_v1_Sound_To_api_Sound(vmi, &domain.Spec.Devices, c)
 

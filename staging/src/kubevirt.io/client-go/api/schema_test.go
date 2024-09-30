@@ -111,9 +111,6 @@ var exampleJSONFmt = `{
             "enabled": true,
             "spinlocks": 4096
           },
-          "crash": {
-            "enabled": false
-          },
           "vpindex": {
             "enabled": false
           },

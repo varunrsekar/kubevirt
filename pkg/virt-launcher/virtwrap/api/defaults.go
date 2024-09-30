@@ -58,9 +58,6 @@ func (d *Defaulter) SetDefaults_DomainSpec(spec *DomainSpec) {
 	if spec.Type == "" {
 		spec.Type = "kvm"
 	}
-	if spec.OnCrash == "" {
-		spec.OnCrash = "destroy"
-	}
 }
 
 func (d *Defaulter) SetDefaults_SysInfo(sysinfo *SysInfo) {

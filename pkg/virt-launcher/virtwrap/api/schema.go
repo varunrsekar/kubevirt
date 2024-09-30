@@ -219,7 +219,6 @@ type DomainSpec struct {
 	NUMATune       *NUMATune       `xml:"numatune"`
 	IOThreads      *IOThreads      `xml:"iothreads,omitempty"`
 	LaunchSecurity *LaunchSecurity `xml:"launchSecurity,omitempty"`
-	OnCrash        string          `xml:"on_crash"`
 }
 
 type CPUTune struct {
@@ -432,9 +431,8 @@ type Resource struct {
 }
 
 type Memory struct {
-	Value    uint64 `xml:",chardata"`
-	Unit     string `xml:"unit,attr"`
-	DumpCore string `xml:"dumpCore,attr,omitempty"`
+	Value uint64 `xml:",chardata"`
+	Unit  string `xml:"unit,attr"`
 }
 
 type MaxMemory struct {

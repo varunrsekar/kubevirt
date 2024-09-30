@@ -178,6 +178,8 @@ func (mon *monitor) refresh() {
 	if exists == false {
 		log.Log.Infof("Process %s and pid %d is gone!", mon.domainName, mon.pid)
 		mon.pid = 0
+		mon.isDone = true
+		return
 	}
 
 	if isZombie {
