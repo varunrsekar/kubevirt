@@ -142,6 +142,7 @@ var _ = Describe("Preference.Devices", func() {
 				PreferredSoundModel:          "ac97",
 				PreferredRng:                 &virtv1.Rng{},
 				PreferredInterfaceMasquerade: &virtv1.InterfaceMasquerade{},
+				PreferredPanicDeviceModel:    pointer.P(virtv1.Hyperv),
 			},
 		}
 	})
@@ -209,6 +210,7 @@ var _ = Describe("Preference.Devices", func() {
 		Expect(vmi.Spec.Domain.Devices.NetworkInterfaceMultiQueue).
 			To(HaveValue(Equal(*preferenceSpec.Devices.PreferredNetworkInterfaceMultiQueue)))
 		Expect(vmi.Spec.Domain.Devices.BlockMultiQueue).To(HaveValue(Equal(*preferenceSpec.Devices.PreferredBlockMultiQueue)))
+		Expect(vmi.Spec.Domain.Devices.PanicDevices).To(Equal(preferenceSpec.Devices.PreferredPanicDevices))
 	})
 
 	It("Should apply when a VMI disk doesn't have a DiskDevice target defined", func() {
@@ -292,6 +294,42 @@ var _ = Describe("Preference.Devices", func() {
 				&virtv1.TPMDevice{Enabled: pointer.P(false)},
 				&virtv1.TPMDevice{Enabled: pointer.P(true)},
 				&virtv1.TPMDevice{Enabled: pointer.P(false)},
+			),
+		)
+	})
+
+	It("Should apply the missing PanicDevice preferences to a VMI", func() {
+		emptyPanicDeviceTest := virtv1.PanicDevice{}
+		hypervPanicDeviceTest := virtv1.PanicDevice{Model: pointer.P(virtv1.Hyperv)}
+		isaPanicDeviceTest := virtv1.PanicDevice{Model: pointer.P(virtv1.Isa)}
+		vmi.Spec.Domain.Devices.PanicDevices = []virtv1.PanicDevice{isaPanicDeviceTest, emptyPanicDeviceTest}
+		Expect(vmiApplier.ApplyToVMI(field, instancetypeSpec, preferenceSpec, &vmi.Spec, &vmi.ObjectMeta)).To(Succeed())
+		Expect(vmi.Spec.Domain.Devices.PanicDevices[0]).To(Equal(isaPanicDeviceTest))
+		Expect(vmi.Spec.Domain.Devices.PanicDevices[1]).To(Equal(emptyPanicDeviceTest))
+		Expect(vmi.Spec.Domain.Devices.PanicDevices[2]).To(Equal(hypervPanicDeviceTest))
+	})
+	Context("PreferredPanicDeviceModel", func() {
+		DescribeTable("should",
+			func(preferredPanicDeviceModel *virtv1.PanicDeviceModel, vmiPanicDevices, expectedPanicDevices []virtv1.PanicDevice) {
+				vmi.Spec.Domain.Devices.PanicDevices = vmiPanicDevices
+				preferenceSpec.Devices.PreferredPanicDeviceModel = preferredPanicDeviceModel
+				Expect(vmiApplier.ApplyToVMI(field, instancetypeSpec, preferenceSpec, &vmi.Spec, &vmi.ObjectMeta)).To(Succeed())
+				Expect(vmi.Spec.Domain.Devices.PanicDevices).To(Equal(expectedPanicDevices))
+			},
+			Entry("not apply when preferredPanicDeviceModel is nil",
+				nil,
+				[]virtv1.PanicDevice{{Model: pointer.P(virtv1.Hyperv)}},
+				[]virtv1.PanicDevice{{Model: pointer.P(virtv1.Hyperv)}},
+			),
+			Entry("not apply when panic devices is not provided in the VMI spec",
+				pointer.P(virtv1.Hyperv),
+				[]virtv1.PanicDevice{},
+				[]virtv1.PanicDevice{},
+			),
+			Entry("only apply when  panic device model is nil for a panic device provided in the VMI spec",
+				pointer.P(virtv1.Isa),
+				[]virtv1.PanicDevice{{Model: pointer.P(virtv1.Hyperv)}, {}, {Model: pointer.P(virtv1.PanicDeviceModel(""))}},
+				[]virtv1.PanicDevice{{Model: pointer.P(virtv1.Hyperv)}, {Model: pointer.P(virtv1.Isa)}, {Model: pointer.P(virtv1.PanicDeviceModel(""))}},
 			),
 		)
 	})
