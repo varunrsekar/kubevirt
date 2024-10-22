@@ -332,6 +332,11 @@
           }
         ],
         "downwardMetrics": {},
+        "panicDevices": [
+          {
+            "model": "modelValue"
+          }
+        ],
         "filesystems": [
           {
             "name": "nameValue",
